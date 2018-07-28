@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>添加车辆</title>
+	<link rel="stylesheet" href="<?php echo CSS_URL; ?>/main.css">
+	<script src="<?php echo JS_URL; ?>/jquery-3.3.1.js"></script>
+</head>
+<body>
+	<div class="no-back">
+		<div id="back-foward"></div>
+		<div id="car"></div>
+		<div id="logo"></div>
+		<div class="index-img">
+			<div class="index-float">
+				<img src="<?php echo IMG_URL; ?>/banner1.png" alt="">
+				<img src="<?php echo IMG_URL; ?>/banner2.png" alt="">
+				<img src="<?php echo IMG_URL; ?>/banner3.png" alt="">
+				<img src="<?php echo IMG_URL; ?>/banner1.png" alt="">
+			</div>
+		</div>
+		<div class="index-info">
+			<img src="<?php echo IMG_URL; ?>/index-car.png" alt="">
+			<div class="index-text">
+				<p>京 P90N65 <span>全新奥迪A4L</span></p>
+				<p>行驶公里：3500km</p>
+				<div class="index-num">
+					<p>今日限行</p>
+					<img src="<?php echo IMG_URL; ?>/4.png" alt="">
+					<img src="<?php echo IMG_URL; ?>/9.png" alt="">
+				</div>
+				<div class="index-warn">
+					<p>违章提醒</p>
+					<img src="<?php echo IMG_URL; ?>/warn.png" alt="">
+				</div>
+			</div>
+		</div>
+		<div class="clear"></div>
+		<div class="index-list">
+			<span>圈子</span>
+			<span>...</span>
+			<ul>
+				<li>
+					<img src="<?php echo IMG_URL; ?>/thumb1.png" alt="">
+					<div>
+						<p>夏天车辆防暑，我有六个小妙招</p>
+						<p>Andy</p>
+					</div>
+				</li>
+				<li>
+					<img src="<?php echo IMG_URL; ?>/thumb2.png" alt="">
+					<div>
+						<p>新能源汽车申请政策解读</p>
+						<p>Peter</p>
+					</div>
+				</li>
+				<li>
+					<img src="<?php echo IMG_URL; ?>/thumb3.png" alt="">
+					<div>
+						<p>自驾游去云南</p>
+						<p>James</p>
+					</div>
+				</li>
+				<li>
+					<img src="<?php echo IMG_URL; ?>/thumb1.png" alt="">
+					<div>
+						<p>夏天车辆防暑，我有六个小妙招</p>
+						<p>Andy</p>
+					</div>
+				</li>
+				<li>
+					<img src="<?php echo IMG_URL; ?>/thumb2.png" alt="">
+					<div>
+						<p>新能源汽车申请政策解读</p>
+						<p>Peter</p>
+					</div>
+				</li>
+				<li>
+					<img src="<?php echo IMG_URL; ?>/thumb3.png" alt="">
+					<div>
+						<p>自驾游去云南</p>
+						<p>James</p>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="index-button">
+			<ul>
+				<li><a href="__CONTROLLER__/shop">保养</a></li>
+				<li><a href="__CONTROLLER__/shop">维修</a></li>
+			</ul>
+		</div>
+	</div>
+	<script>
+		var num =0;
+		var time1;
+		function move(){
+			if(num >-500){
+				num -= 376;
+				$('.index-float').animate({
+					left:num,
+				},1500)
+			}else{
+				num -=376;
+				$('.index-float').animate({
+					left:num,
+				},1500,function(){
+					console.log('结束');
+					$('.index-float').css('left','0px');
+					num =0;
+				});
+			}
+		};
+		var time1 = setInterval(move,3000);
+		
+		$('.index-float').mouseover(function(){
+			console.log('清除计时器');
+			window.clearInterval(time1);
+		})
+		
+		$('.index-float').mouseout(function(){
+			console.log('开启计时器');
+			move();
+			time1 = setInterval(move,3000);
+		})
+	</script>
+</body>
+</html>
