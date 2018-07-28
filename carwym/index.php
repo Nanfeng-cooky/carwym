@@ -12,3 +12,5 @@ define ('ADMIN_IMG_URL','/Application/Admin/Public/img');
 
 //引入thinkphp
 include ('../thinkphp/index.php');
+
+
