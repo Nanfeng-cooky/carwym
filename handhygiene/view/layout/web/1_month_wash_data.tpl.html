@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" class="app">
+<head>   
+  <meta charset="utf-8">
+  <title>科室手卫生统计</title>
+  <meta name="description" content="app, web app, responsive, admin dashboard, admin, flat, flat ui, ui kit, off screen nav">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> 
+  <link rel="stylesheet" href="static/css/bootstrap.css" type="text/css">
+  <link rel="stylesheet" href="static/css/animate.css" type="text/css">
+  <link rel="stylesheet" href="static/css/font-awesome.min.css" type="text/css">
+  <link rel="stylesheet" href="static/css/iconstatic/.css" type="text/css">
+  <link rel="stylesheet" href="static/css/font.css" type="text/css">
+  <link rel="stylesheet" href="static/css/app.css" type="text/css">  
+  <link rel="stylesheet" href="static/js/datatables/datatables.css" type="text/css"> 
+  <link rel="stylesheet" href="static/css/wash_style.css" type="text/css"> 
+    <!--[if lt IE 9]>
+    <script src="js/ie/html5shiv.js"></script>
+    <script src="js/ie/respond.min.js"></script>
+    <script src="js/ie/excanvas.js"></script>
+  <![endif]-->
+</head>
+<body class="">
+  <section class="vbox">
+    <?php include_once('header.tpl.html'); ?>
+    <section>
+      <section class="hbox stretch">
+        <!-- .aside -->
+        <?php include_once('left_nav.tpl.html'); ?>
+        <!-- /.aside -->
+        <section id="content">
+          <section class="vbox">
+            <section class="scrollable padder">
+              <div class="m-b-md">
+                <div style="text-align:center;"><h3>今月手卫生执行情况</h3></div>
+                <div style="text-align:right;">
+                    <p>人员姓名：<?php echo $data['username'];?></p>
+                </div>
+                <div style="text-align:center;font-size:60px;"><?php echo $data['count'];?>次</div>
+                <div id="month_chart_box">
+                    <div id="month_chart"></div>
+                </div>
+              </div>
+              <section class="panel panel-default">
+                <header class="panel-heading">
+                  今日职务手卫生执行情况统计
+                  <i class="fa fa-info-sign text-muted" data-toggle="tooltip" data-placement="bottom" data-title="ajax to load the data." data-original-title="" title=""></i> 
+                </header>
+                <div class="table-responsive">
+                    <input type="hidden" id="card_number" value = "<?php echo $data['card_number'];?>">
+                    <table class="table table-striped m-b-none dataTable" data-ride="datatables">
+                      <thead>
+                        <tr>
+                          <th width="33%">序号</th>
+                          <th width="33%">日期</th>
+                          <th width="33%">洗手次数</th>            
+                        </tr>
+                      </thead>
+                    
+                      <tbody>
+                      </tbody>
+                    </table>
+                </div>
+                <div class="text-right">
+                    <a href="?c=user&a=user_index"><i class="fa fa-arrow-circle-left" style="font-size:30px;"></i></a>
+                </div>
+              </section>
+             </section> 
+
+          </section>
+        </section>
+      </section>
+    </section>
+  </section>
+  <script src="static/js/jquery.min.js"></script>
+  <!-- bootstrap -->
+  <script src="static/js/bootstrap.js"></script>
+  <!-- app -->
+  <script src="static/js/app.js"></script>
+  <script src="static/js/slimscroll/jquery.slimscroll.min.js"></script>
+  <!-- datatables-->
+  <script src="static/js/datatables/jquery.dataTables.min.js"></script>
+  <script src="static/js/datatables/jquery.csv-0.71.min.js"></script>
+  <script src="static/js/app.plugin.js"></script>
+  <script src="static/js/echarts.js"></script>
+  <script src="static/js/datatables/demo_month_user.js"></script>
+<script type="text/javascript">
+    $(function(){
+        var card_number = $('#card_number').val();
+        $.ajax({
+          type:"GET",
+          url:"?c=user&a=user_month_wash_count_ajax",
+          data: {card_number:card_number},
+          dataType:"json",
+          async: true,
+          success:function(mes){
+              //本月折线图
+              var month_chart = echarts.init(document.getElementById('month_chart'));
+              var option = {
+                      color: ['#3398DB'],
+                      tooltip : {
+                          trigger: 'axis',
+                          axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                              type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                          }
+                      },
+                      grid: {
+                          left: '3%',
+                          right: '4%',
+                          bottom: '3%',
+                          containLabel: true
+                      },
+                      xAxis : [
+                          {
+                              type : 'category',
+                              data : mes['date'],
+                              axisTick: {
+                                  alignWithLabel: true
+                              }
+                          }
+                      ],
+                      yAxis : [
+                          {
+                              type : 'value'
+                          }
+                      ],
+                      series : [
+                          {
+                              type:'bar',
+                              barWidth: '60%',
+                              data:mes['count']
+                          }
+                      ]
+                  };
+
+              month_chart.setOption(option);
+          },
+          error:function(){                
+          }
+        });  
+    });
+  </script>
+
+  <script type="text/javascript">
+    $(function(){
+        $.ajax({
+            url : "?c=monitoring&a=get_session",
+            type: "post",
+            dataType: "json",
+            success: function(mes){
+               if(mes == 2){//表明身份是护士长
+                   $("#nav_top").hide();
+                   $("#nav_top_div").hide();
+                   $("#nav_middle").hide();
+                   $("#nav_middle_div").hide();
+                   $("#nav_bottom").hide();
+                }
+            },
+            error: function(){
+                alert("ajax发送失败");
+            }
+        });
+    }); 
+  </script>
+</body>
+</html>

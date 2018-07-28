@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" class="app">
+<head>   
+  <meta charset="utf-8">
+  <title>人员手卫生统计</title>
+  <meta name="description" content="app, web app, responsive, admin dashboard, admin, flat, flat ui, ui kit, off screen nav">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> 
+  <link rel="stylesheet" href="static/css/bootstrap.css" type="text/css">
+  <link rel="stylesheet" href="static/css/animate.css" type="text/css">
+  <link rel="stylesheet" href="static/css/font-awesome.min.css" type="text/css">
+  <link rel="stylesheet" href="static/css/icon.css" type="text/css">
+  <link rel="stylesheet" href="static/css/font.css" type="text/css">
+  <link rel="stylesheet" href="static/css/app.css" type="text/css">  
+  <link rel="stylesheet" href="static/js/datatables/datatables.css" type="text/css"> 
+  <link rel="stylesheet" href="static/css/wash_style.css" type="text/css"> 
+    <!--[if lt IE 9]>
+    <script src="js/ie/html5shiv.js"></script>
+    <script src="js/ie/respond.min.js"></script>
+    <script src="js/ie/excanvas.js"></script>
+  <![endif]-->
+</head>
+<body class="">
+  <section class="vbox">
+    <?php include_once('header.tpl.html'); ?>
+    <section>
+      <section class="hbox stretch">
+        <!-- .aside -->
+        <?php include_once('left_nav.tpl.html'); ?>
+        <!-- /.aside -->
+        <section id="content">
+          <section class="vbox">
+            <section class="scrollable padder">
+              <div class="m-b-md">
+                <h3 class="m-b-none">人员手卫生统计</h3>
+                <div id="button_sel_type">
+ <!--                  <div id="department_type">
+                      <div class="type_name">科室：</div>
+                      <div id="department_type_select">
+                          <?php foreach($data['department'] as $key=>$value){ ?>
+                            <button name="department" value="<?php echo $value['id']?>"><?php echo $value['department'];?></button>
+                          <?php } ?>
+                      </div>
+                  </div> -->
+                 <!--  <div id="job_type">
+                      <div class="type_name">职务：</div>
+                      <div id="job_type_select">
+                          <?php foreach($data['duty'] as $k=>$v){ ?>
+                            <button name="duty" value="<?php echo $v['id']?>"><?php echo $v['duty'];?></button>
+                          <?php } ?>
+                      </div>
+                  </div> -->
+              </div>
+            </div>
+            <section class="panel panel-default">
+              <header class="panel-heading">
+                人员管理
+                <i class="fa fa-info-sign text-muted" data-toggle="tooltip" data-placement="bottom" data-title="ajax to load the data." data-original-title="" title=""></i> 
+              </header>
+              <div class="table-responsive">
+                  <table class="table table-striped m-b-none dataTable" data-ride="datatables">
+                    <thead>
+                      <tr>
+                        <th width="13%">人员姓名</th>
+                        <th width="13%">胸卡编号</th>
+                        <th width="13%">科室名称</th>
+                        <th width="13%">职务名称</th>
+                        <th width="24%">今日手卫生执行次数点击查看详情</th>
+                        <th width="24%">本月手卫生执行次数点击查看详情</th>
+                      </tr>
+                    </thead>
+                  
+                    <tbody id="example">
+                    </tbody>
+                  </table>
+              </div>
+            </section>
+          </section>
+        </section>
+      </section>
+    </section>
+  </section>
+  <script src="static/js/jquery.min.js"></script> 
+  <!-- bootstrap -->
+  <script src="static/js/bootstrap.js"></script>
+  <!-- app -->
+  <script src="static/js/app.js"></script>
+  <script src="static/js/slimscroll/jquery.slimscroll.min.js"></script>
+  <!-- datatables-->
+  <script src="static/js/datatables/jquery.dataTables.min.js"></script>
+  <script src="static/js/datatables/jquery.csv-0.71.min.js"></script>
+  <script src="static/js/app.plugin.js"></script>
+  <script src="static/js/datatables/demo_user.js"></script>
+  <script type="text/javascript">
+     $(function(){
+        $("input[type='text']").attr("placeholder","输入搜索内容,使用空格符分隔"); 
+
+        // $('#example').on('click','tr td:nth-child(5)', function (e) {
+        //     var card_number = $(this).prev().prev().prev().text();
+        //     alert(card_number);
+        // });
+     });
+  </script>
+
+
+  <script type="text/javascript">
+    $(function(){
+        $.ajax({
+            url : "?c=monitoring&a=get_session",
+            type: "post",
+            dataType: "json",
+            success: function(mes){
+               if(mes == 2){//表明身份是护士长
+                   $("#nav_top").hide();
+                   $("#nav_top_div").hide();
+                   $("#nav_middle").hide();
+                   $("#nav_middle_div").hide();
+                   $("#nav_bottom").hide();
+                }
+            },
+            error: function(){
+                alert("ajax发送失败");
+            }
+        });
+    }); 
+  </script>
+</body>
+</html>

@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+        
+        <title>职务详情</title>
+        <link async="true" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.bootcss.com/owl-carousel/1.32/owl.carousel.min.css" rel="stylesheet">
+        
+        <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+        <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="static/js/echarts.js"></script>
+        <script src="static/js/echarts_purple_passion.js"></script>
+
+        <style type="text/css">
+           body{
+                min-width: 630px;
+                color: #fff;
+                line-height: 1.53846154;
+            }
+            a:link { color:#fff;text-decoration:none; }
+            a:visited { color:#fff;text-decoration:none; }
+            a:hover { color:#fff;text-decoration:none; }
+            a:active { color:#fff;text-decoration:none; }
+
+            #resize_small{
+                position: fixed;
+                z-index: 500;
+                top: 2vh;
+                bottom: auto;
+                right: 1vw;
+                font-size: 0.4rem;
+            }
+
+            .row{
+                margin: 0;
+            }
+            .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9 {
+                padding-right: 0px;
+                padding-left: 0px;
+                height:100%;
+            }
+            #rvscan{
+                position: fixed;
+                width: 100%;
+                height:100%;
+                background-color: #182535;
+            } 
+
+            .box_bg{
+                background-color: #202b49;
+            }
+
+            .font_28{
+                font-size: 0.4rem;
+            }
+            .font_20{
+                font-size: 0.2rem;
+            }
+            .font_color{
+                color:#f6726f;
+            }
+            .font_ca72ff{
+                color:#72caff;
+            }
+            .font_61a0a8{
+                color:#61a0a8;
+            }
+            .border{
+                border:solid #253255 1px;
+            }
+            .overflow_hidden{
+                overflow:hidden;
+            }
+            .display_inline_block{
+                display:inline-block;
+            }
+            .display_flex{
+                display: flex;
+                justify-content:center;
+                align-items:center;
+            }
+            .height_100{
+                height: 100%;
+            }
+            /*头部布局*/
+            #rvscan_top{
+                height: 10%
+            }
+            .rvscan_top_logo{
+                width:60%;
+            }
+            /*.tq{
+                margin-left: 10px;
+            }*/
+            /*echart布局*/
+            #jobEchart,#departmentEchart{
+                width: 100%;
+                height: 90%;
+            }
+            /*内容布局*/
+            #rvscan_center{
+                height: 87%;
+            }
+            .l_1{
+                height:10%;
+            }
+            .today_det_title_wash{
+                border-bottom:1px solid #f6726f;padding-bottom:2px;
+            }
+            .l_1_b{
+                height: 49%;
+            }
+            .l_1_b>p{
+                width:100%;margin:0 auto;
+            }
+            .l_1_b_1_padding_1{
+                padding-right: 0.05rem;
+            }
+            .l_1_b_1_padding_3{
+                padding-left: 0.05rem;
+            }
+            .l_2{
+                height: 38%;
+            }
+            .l_3{
+                height: 48%;text-align: center;
+            }
+            .num_job_box{
+                width: 1.5rem;
+                padding:0.2rem;
+                margin-top: 0.25rem;
+            }
+            .r_t{
+                height:30%;width:100%;
+            }
+            .r_t_l{
+                height:30%;
+            }
+            .r_t_l_t{
+                height:67%;
+            }
+            .week_det_title_wash{
+                border-bottom:1px solid #45b9b7;padding-bottom:2px;
+            }
+            #monthwash_option{
+                width:100%;height:75%;margin-top:-30px;
+            }
+
+            .rvscan_center_pd{
+                padding-left: 0.1rem;
+                padding-right: 0.1rem;
+            }
+            .job_sel{
+                margin: 0.05rem;
+                padding-right: 0.1rem;
+                padding-left: 0.1rem;
+                border:solid #556fb5 1px;
+                border-radius: 0.01rem;
+                background-color: #202b49;
+            }
+            .r_b{
+                height: 68%;
+            }
+            .r_2_t{
+                height:30px;padding-left: 10px;
+            }
+            .box_bg_job{
+                background-color: #182535;
+            }
+            #job_list{
+                height:20%;text-align:right;padding-right:30px;padding-top:10px;padding-left: 30px;
+            }
+            .title_wash_3{
+                border-bottom:1px solid #2d72c1;padding-bottom:2px;
+            }
+            .job_click{
+                background-color: #556fb5;
+            }
+        </style>
+    </head>
+    <body class="page-body">
+        <div id="resize_small"><a href="?c=monitoring&a=index"><i class="glyphicon glyphicon-resize-small"></i></a></div>
+        <div id="rvscan">
+            <div style="height:2%"></div>
+            <div id="rvscan_top" class="row">
+                <div class="col-xs-3">
+                    <img class="rvscan_top_logo" src="static/images/logo_20171219091848.png">
+                </div>
+                <div class="col-xs-6 text-center">
+                    <p  class="font_20"><a href="?c=monitoring&a=index_full"><b>手卫生依从性物联网管理监控中心</b></a><br/>IOT Management System Of Hand Hygiene Compliance</p>
+                </div>
+                <div class="col-xs-3 text-center">
+                    <span class="display_inline_block tq_time"><p>星期一&nbsp;11:10<br/>2017年12月11号</p></span>
+                    <!-- <span class="display_inline_block tq"><p>7&#8451;<br/>晴</p></span> -->
+                </div>
+            </div>
+            <div id="rvscan_center" class="row">
+                <div class="col-xs-4 rvscan_center_pd">
+                    <div class="l_1">
+                        <div class="col-xs-6 text-center l_1_b_1_padding_1 overflow_hidden ">
+                            <div class="height_100 box_bg border">
+                                <div style="height:25%"></div>
+                                <a href="?c=monitoring&a=department_details_interface">科室详情</a>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 text-center l_1_b_1_padding_3 overflow_hidden ">
+                            <div class="height_100 box_bg_job border">
+                                <div style="height:25%"></div>
+                                <a href="javascript:void;">职务详情</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="height:2%"></div>
+                    <div class="box_bg l_2 border">
+                        <div style="padding-left:0.05rem;padding-top:0.05rem;">本周各职务手卫生执行占比</div>
+                        <div id="jobEchart"></div>
+                    </div>
+                    <div style="height:2%"></div>
+                    <div class="box_bg l_3 border overflow_hidden">
+                        <div style="padding-left:0.05rem;padding-top:0.05rem;text-align: left;">参与手卫生物联网各职务数量</div>
+                        <div id="num_job"></div>
+                    </div>
+                    
+                </div>
+                <div class="col-xs-8 rvscan_center_pd">
+                    <div class="row r_t">
+                        <div class="text-center col-xs-6 l_1_b_1_padding_1">
+                                <div class="r_t_l box_bg border display_flex">
+                                    <span class="today_det_title_wash">本岗今日手卫生执行情况</span>
+                                </div>
+                                <div style="height:3%;"></div>
+                                <div class="row r_t_l_t">
+                                    <div class="col-xs-6 l_1_b_1_padding_1">
+                                        <div class="box_bg border height_100 overflow_hidden display_flex">
+                                            <p><b id="job_num_today" class="font_28 font_ca72ff"></b><br/>今日人均次数</p>
+                                        </div>                                    
+                                    </div>
+                                    <div class="col-xs-6 l_1_b_1_padding_3">
+                                        <div class="box_bg border height_100 overflow_hidden display_flex">
+                                            <p><b id="rate_num_today" class="font_28 font_61a0a8"></b><br/>今日依从率</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                        </div>
+                        <div class="text-center col-xs-6 l_1_b_1_padding_3">
+                                <div class="r_t_l box_bg border display_flex">
+                                    <span class="week_det_title_wash">本岗本周手卫生执行情况</span>
+                                </div>
+                                <div style="height:3%;"></div>
+                                <div class="row r_t_l_t">
+                                    <div class="col-xs-6 l_1_b_1_padding_1">
+                                        <div class="box_bg border height_100 overflow_hidden display_flex">
+                                            <p><b id="job_num_week" class="font_28 font_color"></b><br/>本周人均洗手次数</p>
+                                        </div>                                    
+                                    </div>
+                                    <div class="col-xs-6 l_1_b_1_padding_3">
+                                        <div class="box_bg border height_100 overflow_hidden display_flex">
+                                            <p><b id="rate_num_week" class="font_28 font_color"></b><br/>本周综合评价</p>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                    <div style="height:2%"></div>
+                    <div class="box_bg border r_b">
+                        <div class="r_2_t"><span class="title_wash_3 font_20">本岗本月人均洗手次数图</span></div>
+                        <div id="monthwash_option"></div>
+                        <div id="job_list">
+                            <?php foreach($data as $k=>$v){ ?>
+                                <button class="job_sel" value="<?php echo $v['id'];?>"><?php echo $v['duty'];?></button>
+                            <?php } ?>
+
+                            <!-- <a href="javascript:void;" class="job_sel job_click">医生</a>
+                            <a href="javascript:void;" class="job_sel">护士</a>
+                            <a href="javascript:void;" class="job_sel">护工</a>
+                            <a href="javascript:void;" class="job_sel">被服员</a>
+                            <a href="javascript:void;" class="job_sel">护工实习生</a>
+                            <a href="javascript:void;" class="job_sel">轮转医生 </a> -->
+                        </div>
+                </div>
+            </div>
+        </div> 
+        <script>       
+            (function (doc, win) {   
+                var docEl = doc.documentElement,   
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',   
+                recalc = function () {   
+                var clientWidth = docEl.clientWidth;   
+                if (!clientWidth) return;   
+                docEl.style.fontSize = 20 * (clientWidth / 320) + 'px';   
+            };   
+            if (!doc.addEventListener) return;   
+            win.addEventListener(resizeEvt, recalc, false);   
+            doc.addEventListener('DOMContentLoaded', recalc, false);   
+            })(document, window);   
+        </script>
+        <script type="text/javascript">
+            var jobEchart,monthwash_option;
+            var duty = '医生';
+
+            var jobEchart = echarts.init(document.getElementById('jobEchart'),'purple-passion');
+            var monthwashEchart = echarts.init(document.getElementById('monthwash_option'),'purple-passion');
+
+            job_option = {
+                // title : {
+                //     text: '本周各职务手卫生执行占比',
+                //     x:'left'
+                // },
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    x : 'center',
+                    y : 'bottom',
+                },
+                calculable : true,
+                series : [
+                    {
+                        name:'手卫生执行占比',
+                        type:'pie',
+                        radius : [20, 40],
+                        center : ['50%', '50%'],
+                        label: {
+                            normal: {
+                                formatter: '{b}{d}%'
+                            },
+                      
+                        },
+                        data:[
+                            {value:10, name:'护士10%'},
+                            {value:5, name:'护工'},
+                            {value:15, name:'医生'},
+                            {value:20, name:'保洁员'},
+                            {value:10, name:'被服员'},
+                            {value:25, name:'轮转医生'},
+                            {value:15, name:'护工实习生'}
+                        ]
+                    }
+                ]
+            };
+
+            monthwash_option = {
+                // title: {
+                //     text: '',
+                //     x: 'center'
+                // },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        animation: false,
+                        type : 'line'
+                    }
+                },
+                // legend: {
+                //     data:['值'],
+                //     x: 'left'
+                // },
+                // toolbox: {
+                //     feature: {
+                //         dataZoom: {
+                //             yAxisIndex: 'none'
+                //         }
+                //     }
+                // },
+                axisPointer: {
+                    link: {xAxisIndex: 'all'}
+                },
+                dataZoom: [
+                    {
+                        show: true,
+                        realtime: true,
+                        height:18
+                        // start: 0,
+                        // end: 100,
+                        // xAxisIndex: [0]
+                    }
+                ],
+                grid: [{
+                    left: 50,
+                    right: 50,
+                    height: '65%'
+                }],
+                xAxis : [
+                    {
+                        type : 'category',
+                        boundaryGap : false,
+                        axisLine: {onZero: true},
+                        data: []
+                    }
+                ],
+                yAxis : [
+                    {
+                        // name : '值',
+                        type : 'value',
+                        // max : 100
+                    }
+                ],
+                series : [
+                    {
+                        name:'洗手次数',
+                        type:'line',
+                        symbolSize: 8,
+                        hoverAnimation: false,
+                        data: []
+                    }
+                ]
+            };
+
+
+            /*获取当前时间*/
+            function get_now_time(){
+                var nowDate = new Date(),getday = nowDate.getDay();
+                if (getday == 0) {
+                    getday = "星期天";
+                }else if (getday == 1) {
+                    getday = "星期一";
+                }else if (getday == 2) {
+                    getday = "星期二";
+                }else if (getday == 3) {
+                    getday = "星期三";
+                }else if (getday == 4) {
+                    getday = "星期四";
+                }else if (getday == 5) {
+                    getday = "星期五";
+                }else if (getday == 6) {
+                    getday = "星期六";
+                };
+                $('.tq_time').empty().append("<p>"+nowDate.toLocaleDateString()+"<br/>"+getday+"&nbsp;"+nowDate.toLocaleTimeString()+"</p>");
+            }
+            /*获取职务*/
+            // function ajax_get_det(){
+            //     $.ajax({
+            //         datatype:'json',
+            //         url:"?c=duty&a=deaprtmentduty",
+            //         type:'GET',
+            //         success:function(data){
+            //             console.log(data);
+            //             var append = "";
+            //             for (var i = 0; i < data.data[1]; i--) {
+            //                 append += "<a href=\"javascript:void;\" class=\"department_sel\">"+data.data[1][i]+"</a>";
+            //             };
+            //             $('#job_list').empty().append(append);
+
+            //         },
+            //         error:function(msg){
+            //             alert("数据请求失败");
+            //         },
+            //     });
+            // }
+            /*职务详情页的折线*/
+            function ajax_week_hospital_wash_line(values=1){
+                duty_id = values;
+                $.ajax({
+                    datatype:'json',
+                    url:"?c=dutydetails&a=dutyright&duty_id=" + duty_id,
+                    type:'GET',
+                    success:function(data){
+                        console.log(data);
+                        var data_data = data,xAxis = new Array(),series = new Array();
+                        for (var i = 0; i < data_data.data.wash_line.length; i++) {
+                            xAxis[i]  = data_data.data.wash_line[i].date;
+                            series[i] = data_data.data.wash_line[i].average;
+                        };
+                        monthwash_option.xAxis[0]['data'] = xAxis;
+                        monthwash_option.series[0]['data'] = series;
+                        monthwashEchart.setOption(monthwash_option);
+                        $('#job_num_today').text(data_data.data.today_wash);
+                        $('#job_num_week').text(data_data.data.week_wash);
+                        $('#rate_num_today').text(data_data.data.today_compliance_rate);
+                        $('#rate_num_week').text(data_data.data.week_compliance_rate);
+                    },
+                    error:function(msg){
+                        alert("数据请求失败");
+                    },
+                });
+            };
+
+            /*本周各职务手卫生执行占比*/
+            function ajax_week_job_wash_pie(){
+                $.ajax({
+                    datatype:'json',
+                    url:"?c=dutydetails&a=dutyleft", 
+                    type:'GET',
+                    success:function(data){
+                        console.log(data);
+                        var wash_num = 0,job = new Array(),append="";
+                        // for (var i =  0; i < data.data.length; i++) {
+                        //     wash_num += data.data[i].wash_number;
+                        // };
+                        for (var i =  0; i < data.data.length; i++) {
+                            var this_job = {"value":data.data[i].wash_number,"name":data.data[i].duty};
+                            // var this_job = {"value":data.data[i].wash_number,"name":data.data[i].duty + parseInt(data.data[i].wash_number/wash_num*100) + "%"};
+                            job[i] = this_job;
+                        
+                            append += "<div class=\"display_inline_block num_job_box overflow_hidden\"><p><span style=\"font-size:0.4rem;\">"+data.data[i].user_number+"</span><br/><span style=\"font-size:0.2rem;\">"+data.data[i].duty+"</span></p ></div>";
+                        };
+
+                        job_option.series[0]['data'] = job;
+                        jobEchart.setOption(job_option);
+
+                        $('#num_job').empty().append(append);
+                    },
+                    error:function(msg){
+                        alert("数据请求失败");
+                    },
+                });
+            };
+
+            function do_ajax(){
+                get_now_time();
+                ajax_week_hospital_wash_line();
+                ajax_week_job_wash_pie();
+            }
+
+
+            $(function(){
+                if (parent.full_hide !== undefined) {
+                    if (parent.full_hide) {
+                        $('#resize_small').hide();
+                    };
+                };
+                $("button[value='1']").addClass('job_click');
+                do_ajax();
+
+                $('.job_sel').click(function(){
+                    var values = $(this).val();
+                    $(this).addClass('job_click').siblings().removeClass('job_click');
+                    ajax_week_hospital_wash_line(values);  
+                });
+            });
+            // $('.department_sel').on('click',function(){
+            //     $(this).addClass('job_click').siblings().removeClass('job_click');
+            //     do_ajax();
+            // });
+            
+            // var winheight = $(window).height();
+            // $('body').css('height',winheight);
+            // $('#rvscan_top').css('height',winheight/100*15);
+            // $('#rvscan_center').css('height',winheight/100*85);
+        </script>
+    </body>
+</html>

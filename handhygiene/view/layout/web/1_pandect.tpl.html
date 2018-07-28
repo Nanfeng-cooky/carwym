@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" class="app">
+<head>   
+  <meta charset="utf-8">
+  <title>总览</title>
+  <meta name="description" content="app, web app, responsive, admin dashboard, admin, flat, flat ui, ui kit, off screen nav">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> 
+  <link rel="stylesheet" href="static/css/bootstrap.css" type="text/css">
+  <link rel="stylesheet" href="static/css/animate.css" type="text/css">
+  <link rel="stylesheet" href="static/css/font-awesome.min.css" type="text/css">
+  <link rel="stylesheet" href="static/css/icon.css" type="text/css">
+  <link rel="stylesheet" href="static/css/font.css" type="text/css">
+  <link rel="stylesheet" href="static/css/app.css" type="text/css">  
+  <link rel="stylesheet" href="static/js/datatables/datatables.css" type="text/css"> 
+  <link rel="stylesheet" href="static/css/wash_style.css" type="text/css"> 
+    <!--[if lt IE 9]>
+    <script src="js/ie/html5shiv.js"></script>
+    <script src="js/ie/respond.min.js"></script>
+    <script src="js/ie/excanvas.js"></script>
+  <![endif]-->
+</head>
+<body class="">
+  <section class="vbox">
+    <?php include_once('header.tpl.html'); ?>
+    <section>
+      <section class="hbox stretch">
+        <!-- .aside -->
+        <?php include_once('left_nav.tpl.html'); ?>
+        <!-- /.aside -->
+        <section id="content" class="pandect_content">
+          <section class="vbox">
+            <section class="scrollable padder">
+              <div id="deparment_details_center">
+                <div id="deparment_details_box">
+                  <?php foreach($data as $key=>$value){ ?>
+                  
+                    <div id="deparment_details_guke" class="deparment_details text-center box_bg">
+                      <p>
+                        <a class="pandect_department" href="?c=department&a=depaertment_statistics&department_id=<?php echo $value['id'];?>">
+                          <div class="deparment_name overflow_hidden" title="<?php echo $value['department'];?>"><?php echo $value['department'];?></div>
+                        </a>
+                        <br/>
+                        <span class="deparment_nowday_num"><?php echo $value['wash_count'];?></span><br/>
+                        今日人均洗手次数<br/>
+                        <div class="row bottom_box">
+                          <div class="col-xs-4"><p class="padding_t_25"><span class="font_34"><?php echo $value['user_count'];?></span><br/><br/><span class="font_12">本科室<br/>人员数量</span></p ></div>
+                          <div class="col-xs-4 bottom_2"><p class="padding_t_25"><span class="font_34"><?php echo $value['card_count'];?></span><br/><br/><span class="font_12">已绑定<br/>胸卡数量</span></p ></div>
+                          <div class="col-xs-4"><p class="padding_t_25"><span class="font_34"><?php echo $value['device_count'];?></span><br/><br/><span class="font_12">已布设<br/>出液器数量</span></p ></div>
+                        </div>
+                      </p >
+                    </div>
+                  
+                  <?php } ?>   
+                </div>                                
+              </div> 
+            </section>
+          </section>
+        </section>
+      </section>
+    </section>
+  </section>
+  <script src="static/js/jquery.min.js"></script>
+  <!-- bootstrap -->
+  <script src="static/js/bootstrap.js"></script>
+  <!-- app -->
+  <script src="static/js/app.js"></script>
+  <script src="static/js/slimscroll/jquery.slimscroll.min.js"></script>
+  <!-- datatables-->
+  <script src="static/js/datatables/jquery.dataTables.min.js"></script>
+  <script src="static/js/datatables/jquery.csv-0.71.min.js"></script>
+  <script src="static/js/app.plugin.js"></script>
+
+  <script type="text/javascript">
+    var details_center_width;
+
+    $(function(){
+      details_center_width = parseInt($('#deparment_details_center').width()/343) * 343;
+      $('#deparment_details_box').css('width',details_center_width);
+    });
+    // 设置监听窗口变化时间
+    $(window).resize(function (){
+        details_center_width = parseInt($('#deparment_details_center').width()/343) * 343;
+        $('#deparment_details_box').css('width',details_center_width);
+    });
+  </script>
+
+  <script type="text/javascript">
+    $(function(){
+        $.ajax({
+            url : "?c=monitoring&a=get_session",
+            type: "post",
+            dataType: "json",
+            success: function(mes){
+               if(mes == 2){//表明身份是护士长
+                   $("#nav_top").hide();
+                   $("#nav_top_div").hide();
+                   $("#nav_middle").hide();
+                   $("#nav_middle_div").hide();
+                   $("#nav_bottom").hide();
+                }
+            },
+            error: function(){
+                alert("ajax发送失败");
+            }
+        });
+    }); 
+  </script>
+</body>
+</html>

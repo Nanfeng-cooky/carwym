@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+        
+        <title>科室详情</title>
+        <link async="true" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.bootcss.com/owl-carousel/1.32/owl.carousel.min.css" rel="stylesheet">
+        
+        <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+        <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="static/js/echarts.js"></script>
+        <script src="static/js/echarts_purple_passion.js"></script>
+
+        <style type="text/css">
+            body{
+                min-width: 630px;
+                color: #fff;
+                line-height: 1.53846154;
+            }
+            a:link { color:#fff;text-decoration:none; }
+            a:visited { color:#fff;text-decoration:none; }
+            a:hover { color:#fff;text-decoration:none; }
+            a:active { color:#fff;text-decoration:none; }
+
+            #resize_small{
+                position: fixed;
+                z-index: 500;
+                top: 2vh;
+                bottom: auto;
+                right: 1vw;
+                font-size: 0.4rem;
+            }
+
+            .row{
+                margin: 0;
+            }
+            .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9 {
+                padding-right: 0px;
+                padding-left: 0px;
+                height:100%;
+            }
+            #rvscan{
+                position: fixed;
+                width: 100%;
+                height:100%;
+                background-color: #182535;
+            } 
+
+            .box_bg{
+                background-color: #202b49;
+            }
+
+            .font_28{
+                font-size: 0.4rem;
+            }
+            .font_20{
+                font-size: 0.2rem;
+            }
+            .font_color{
+                color:#f6726f;
+            }
+            .border{
+                border:solid #253255 1px;
+            }
+            .border_left{
+                border-left:solid #253255 1px;
+            }
+            .border_right{
+                border-left:solid #253255 1px;
+            }
+            .border_top{
+                border-top:solid #253255 1px;
+            }
+            .overflow_hidden{
+                overflow:hidden;
+            }
+            .display_inline_block{
+                display:inline-block;
+            }
+            .display_flex{
+                display: flex;
+                justify-content:center;
+                align-items:center;
+            }
+            .height_100{
+                height: 100%;
+            }
+            /*头部布局*/
+            #rvscan_top{
+                height: 10%
+            }
+            .rvscan_top_logo{
+                height:50%;
+            }
+            /*.glyphicon-fullscreen{
+                font-size: 30px;
+            }*/
+            .rvscan_top_padding{
+                /*padding-top:10px;*/
+            }
+            /*.tq{
+                margin-left: 10px;
+            }*/
+            /*echart布局*/
+            #jobEchart,#departmentEchart{
+                width: 100%;
+                height: 90%;
+            }
+            /*内容布局*/
+            #rvscan_center{
+                height: 87%;
+            }
+            .l_1{
+                height:10%;
+            }
+            .today_det_title_wash{
+                border-bottom:1px solid #f6726f;padding-bottom:2px;
+            }
+            .l_1_b{
+                height: 49%;
+            }
+            .l_1_b>p{
+                width:100%;margin:0 auto;
+            }
+            .l_1_b_1_padding_1{
+                padding-right: 0.05rem;
+            }
+            .l_1_b_1_padding_3{
+                padding-left: 0.05rem;
+            }
+            .r_t{
+                height:30%;width:100%;
+            }
+            .r_t_l{
+                height:30%;
+            }
+            .r_t_l_t{
+                height:67%;
+            }
+            .week_det_title_wash{
+                border-bottom:1px solid #45b9b7;padding-bottom:2px;
+            }
+            .rvscan_center_pd{
+                padding-left: 0.1rem;
+                padding-right: 0.1rem;
+            }
+            .department_sel{
+                margin: 0.05rem;
+                padding-right: 0.1rem;
+                padding-left: 0.1rem;
+                border:solid #556fb5 1px;
+                border-radius: 0.01rem;
+                background-color: #202b49;
+            }
+            .r_b{
+                height: 68%;
+            }
+            .box_bg_det{
+                background-color: #182535;
+            }
+            #weekwash_option{
+                width:100%;height:75%;margin-top:-30px;
+            }
+            .title_wash_3{
+                border-bottom:1px solid #2d72c1;padding-bottom:2px;
+            }
+            #department_list{
+                height:20%;text-align:right;padding-right:30px;padding-top:10px;
+            }
+            .det_click{
+                background-color: #556fb5;
+            }
+            .r_2_t{
+                height:30px;padding-left: 0.1rem;
+            }
+        </style>
+    </head>
+    <body class="page-body">
+        <div id="resize_small"><a href="?c=monitoring&a=index"><i class="glyphicon glyphicon-resize-small"></i></a></div>
+        <div id="rvscan">
+            <div style="height:2%"></div>
+            <div id="rvscan_top" class="row">
+                <div class="col-xs-3">
+                    <img class="rvscan_top_logo" src="static/images/logo_20171219091848.png">
+                </div>
+                <div class="col-xs-6 text-center rvscan_top_padding">
+                    <p class="font_20"><a href="?c=monitoring&a=index_full"><b class="font_20">手卫生依从性物联网管理监控中心</b></a><br/>IOT Management System Of Hand Hygiene Compliance</p>
+                </div>
+                <div class="col-xs-3 text-center rvscan_top_padding">
+                    <span class="display_inline_block tq_time"><p class="font_20">星期一&nbsp;11:10<br/>2017年12月11号</p></span>
+                    <!-- <span class="display_inline_block tq"><p>7&#8451;<br/>晴</p></span> -->
+                </div>
+            </div>
+            <div id="rvscan_center" class="row">
+                <div class="col-xs-4 rvscan_center_pd">
+                    <div class="l_1">
+                        <div class="col-xs-6 text-center l_1_b_1_padding_1 overflow_hidden ">
+                            <div class="height_100 box_bg_det border display_flex">
+                                <a class="font_20" href="javascript:void;">科室详情</a>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 text-center l_1_b_1_padding_3 overflow_hidden ">
+                            <div class="height_100 box_bg border display_flex">
+                                <a class="font_20" href="?c=monitoring&a=duty_details_interface">职务详情</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="height:2%"></div>
+                    <div class="box_bg border" style="height:88%;">
+                        
+                        <img id="ajaxGet" src="static/images/ICU.jpg" width="361px" height="450px" alt="">
+                    </div>
+                    
+                </div>
+                <div class="col-xs-8 rvscan_center_pd">
+                    <div class="row r_t">
+                        <div class="text-center col-xs-6 l_1_b_1_padding_1">
+                                <div class="r_t_l box_bg border display_flex">
+                                    <!-- <div style="height:0.07rem"></div> -->
+                                    <span class="today_det_title_wash font_20">本科室今日手卫生执行情况</span>
+                                </div>
+                                <div style="height:3%;"></div>
+                                <div class="row r_t_l_t">
+                                    <div class="col-xs-6 l_1_b_1_padding_1">
+                                        <div class="box_bg border height_100 overflow_hidden display_flex">
+                                            <p class="font_20"><b id="right_top_l_num" class="font_28 font_color"></b><br/>今日人均次数</p>
+                                        </div>                                    
+                                    </div>
+                                    <div class="col-xs-6 l_1_b_1_padding_3">
+                                        <div class="box_bg border height_100 overflow_hidden display_flex">
+                                            <p class="font_20"><b id="right_top_l_rate" class="font_28 font_color"></b><br/>今日依从率</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                        </div>
+                        <div class="text-center col-xs-6 l_1_b_1_padding_3">
+                                <div class="r_t_l box_bg border display_flex">
+                                    <!-- <div style="height:0.07rem"></div> -->
+                                    <span class="week_det_title_wash font_20">本科室本周手卫生执行情况</span>
+                                </div>
+                                <div style="height:3%;"></div>
+                                <div class="row r_t_l_t">
+                                    <div class="col-xs-6 l_1_b_1_padding_1">
+                                        <div class="box_bg border height_100">
+                                            <div id="departmentEchart"></div>
+                                        </div>                                    
+                                    </div>
+                                    <div class="col-xs-6 l_1_b_1_padding_3">
+                                        <div class="box_bg border height_100 overflow_hidden display_flex">
+                                            <p class="font_20"><b id="right_top_r_ping" class="font_28 font_color"></b><br/>本周科室综合评价</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                        </div>
+                    </div>
+                    <div style="height:2%"></div>
+                    <div class="box_bg r_b border">
+                        <!-- <div style="height:5%;"></div> -->
+                        <div class="r_2_t"><span class="title_wash_3 font_20">本科室本月人均洗手次数图</span></div>
+                        <div id="weekwash_option"></div>
+                        <div id="department_list">
+                            <!-- <a href="javascript:void;" class="department_sel det_click">骨科</a>
+                            <a href="javascript:void;" class="department_sel">血液科</a>
+                            <a href="javascript:void;" class="department_sel">神经内科</a> -->
+                            <?php foreach($data as $k=>$v){ ?>
+                                <button class="department_sel font_20" value="<?php echo $v['id'];?>"><?php echo $v['department'];?></button>
+                            <?php } ?>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>  
+        <script>       
+            (function (doc, win) {   
+                var docEl = doc.documentElement,   
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',   
+                recalc = function () {   
+                var clientWidth = docEl.clientWidth;   
+                if (!clientWidth) return;   
+                docEl.style.fontSize = 20 * (clientWidth / 320) + 'px';   
+            };   
+            if (!doc.addEventListener) return;   
+            win.addEventListener(resizeEvt, recalc, false);   
+            doc.addEventListener('DOMContentLoaded', recalc, false);   
+            })(document, window);   
+        </script>
+        <script type="text/javascript">
+            var departmentEchart,weekwash_option;
+            var department_id = 1;
+            var departmentEchart = echarts.init(document.getElementById('departmentEchart'),'purple-passion');
+            var weekwashEchart = echarts.init(document.getElementById('weekwash_option'),'purple-passion');
+
+            department_option = {
+                title : {
+                    text: '1st',
+                    x:'center',
+                    top:'55%',
+                    textStyle: {
+                        fontSize: '10'
+                    }
+                },
+                // title : {
+                //     text: 'guke',
+                //     x:'center'
+                // },
+                // tooltip : {
+                //     trigger: 'item',
+                //     formatter: "{a} <br/>{b} : {c} ({d}%)"
+                // },
+                // legend: {
+                //     itemWidth: 20,
+                //     itemHeight: 10,
+                //     itemGap: 10,
+                //     x : 'left',
+                //     y : 'top',
+                //     data:['rose1','rose2','rose3','rose4','rose5','rose6','rose7','rose8'],
+                //     textStyle: {
+                //         fontSize: '8'
+                //     }
+                //     // label : {
+                //     //     normal : {
+                //     //         formatter: '{b}:{c}: ({d}%)',
+                //     //     }
+                //     // },
+                // },
+                // calculable : false,
+                // series : [
+                //     {
+                //         name:'手卫生执行占比',
+                //         type:'pie',
+                //         radius : [13, 20],
+                //         center : ['57%', '50%'],
+                //         avoidLabelOverlap: false,
+                //         // label: {
+                //         //     normal: {
+                //         //         show: false,
+                //         //         position: 'center'
+                //         //     },
+                //         //     emphasis: {
+                //         //         show: true,
+                //         //         textStyle: {
+                //         //             fontSize: '30',
+                //         //             fontWeight: 'bold'
+                //         //         }
+                //         //     }
+                //         // },
+                //         labelLine: {
+                //             normal: {
+                //                 show: true,
+                //                     fontSize: '10'
+                //             }
+                //         },
+                //         label: {
+                //             normal: {
+                //                 show: true
+                //             },
+                //             emphasis: {
+                //                 show: true,
+                //                     fontSize: '10',
+                //             }
+                            
+                //         },
+                //         data:[
+                //             {value:10, name:'骨科'},
+                //             {value:5, name:'血液科'},
+                //             {value:15, name:'神经内科'}
+                //         ]
+                //     }
+                // ]
+                series : [
+                    {
+                        name:'手卫生执行占比',
+                        type:'pie',
+                        radius: ['60%', '85%'],
+                        center : ['50%', '50%'],
+                        avoidLabelOverlap: false,
+                        label: {
+                            normal: {
+                                show: false,
+                                position: 'center',
+                                formatter: '{b}\n{d}%'
+                            },
+                            emphasis: {
+                                show: true,
+                                textStyle: {
+                                    fontSize: '10',
+                                    fontWeight: 'bold'
+                                }
+                            }
+                        },
+                        labelLine: {
+                            normal: {
+                                show: false
+                            }
+                        },
+                        data:[]
+                    }
+                ]
+            };
+
+            // weekwash_option = {
+            //     color: ['#3398DB'],
+            //     title : {
+            //         text: '骨科本月人均洗手次数图',
+            //         x:'center'
+            //     },
+            //     tooltip : {
+            //         trigger: 'axis',
+            //         axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            //             type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+            //         }
+            //     },
+            //     grid: {
+            //         left: '3%',
+            //         right: '4%',
+            //         bottom: '3%',
+            //         containLabel: true
+            //     },
+            //     xAxis : [
+            //         {
+            //             type : 'category',
+            //             data : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            //             axisTick: {
+            //                 alignWithLabel: true
+            //             }
+            //         }
+            //     ],
+            //     yAxis : [
+            //         {
+            //             type : 'value'
+            //         }
+            //     ],
+            //     series : [
+            //         {
+            //             type:'bar',
+            //             barWidth: '60%',
+            //             data:[10, 52, 200, 334, 490, 330, 220]
+            //         }
+            //     ]
+            // };
+
+            // departmentEchart.setOption(department_option);
+            // weekwashEchart.setOption(weekwash_option);
+            weekwash_option = {
+                // title: {
+                //     text: '',
+                //     x: 'center'
+                // },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        animation: false,
+                        type : 'line'
+                    }
+                },
+                // legend: {
+                //     data:['值'],
+                //     x: 'left'
+                // },
+                // toolbox: {
+                //     feature: {
+                //         dataZoom: {
+                //             yAxisIndex: 'none'
+                //         }
+                //     }
+                // },
+                axisPointer: {
+                    link: {xAxisIndex: 'all'}
+                },
+                dataZoom: [
+                    {
+                        show: true,
+                        realtime: true,
+                        height:18
+                        // start: 0,
+                        // end: 100,
+                        // xAxisIndex: [0]
+                    }
+                ],
+                grid: [{
+                    left: 50,
+                    right: 50,
+                    height: '65%'
+                }],
+                xAxis : [
+                    {
+                        type : 'category',
+                        boundaryGap : false,
+                        axisLine: {onZero: true},
+                        data: []
+                    }
+                ],
+                yAxis : [
+                    {
+                        // name : '值',
+                        type : 'value',
+                        // max : 100
+                    }
+                ],
+                series : [
+                    {
+                        name:'洗手次数',
+                        type:'line',
+                        symbolSize: 8,
+                        hoverAnimation: false,
+                        data: []
+                    }
+                ]
+            };
+
+            /*获取当前时间*/
+            function get_now_time(){
+                var nowDate = new Date(),getday = nowDate.getDay();
+                if (getday == 0) {
+                    getday = "星期天";
+                }else if (getday == 1) {
+                    getday = "星期一";
+                }else if (getday == 2) {
+                    getday = "星期二";
+                }else if (getday == 3) {
+                    getday = "星期三";
+                }else if (getday == 4) {
+                    getday = "星期四";
+                }else if (getday == 5) {
+                    getday = "星期五";
+                }else if (getday == 6) {
+                    getday = "星期六";
+                };
+                $('.tq_time').empty().append("<p class=\"font_20\">"+nowDate.toLocaleDateString()+"<br/>"+getday+"&nbsp;"+nowDate.toLocaleTimeString()+"</p>");
+            }
+            /*获取科室*/
+            function ajax_get_det(){
+                $.ajax({
+                    datatype:'json',
+                    url:"?c=duty&a=department",
+                    type:'GET',
+                    success:function(data){
+                        // console.log(data);
+                        var append = "";
+                        for (var i = 0; i < data.data.length; i++) {
+                            append += "<a href=\"javascript:void;\" value="+data.data[i]['id']+" class=\"department_sel\">"+data.data[i]['department']+"</a>";
+                        };
+                        $('#department_list').empty().append(append);
+
+                    },
+                    error:function(msg){
+                        alert("数据请求失败");
+                    },
+                });
+            }
+            /*具体科室今日人均洗手次数*/
+            function ajax_today_det_wash_num_average(values = 1){
+                department_id = values;
+                // console.log(department_id);
+                $.ajax({
+                    datatype:'json',
+                    url:"?c=monitoring&a=today_per_wash_count&department_id=" + department_id,
+                    type:'GET',
+                    success:function(data){
+                        // console.log(data);
+                        $('#right_top_l_num').text(data.data.today_per_wash_count);
+                        $('#right_top_l_rate').text(data.data.today_per_compliance_rate);
+
+                    },
+                    error:function(msg){
+                        alert("数据请求失败");
+                    },
+                });
+            };
+            /*本周各科室手卫生执行占比*/
+            function ajax_week_det_wash_pie(){
+                $.ajax({
+                    datatype:'json',
+                    url:"?c=monitoring&a=department_accounted",
+                    type:'GET',
+                    success:function(data){
+                        console.log(data);
+                        var wash_num = 0,department = new Array(),det_legend = new Array(),j = 0,wash_count_max = 0;
+                        for (var i =  0; i < data.data.length; i++) {
+                            wash_num += data.data[i].wash_count;
+                            if (wash_count_max < data.data[i].wash_count) {
+                                wash_count_max = data.data[i].wash_count;
+                                j = i;
+                            }
+                        }; 
+                        for (var i =  0; i < data.data.length; i++) {
+                            if (i == j) {
+                                if (data.data[i].wash_count == 0) {
+                                    department_option.title.text = data.data[i].department + "0%\n1st";
+                                }else {
+                                    department_option.title.text = data.data[i].department + parseInt(data.data[i].wash_count/wash_num*100) + "%\n1st";
+                                };
+                                department[i] = {"value":data.data[i].wash_count,"name":data.data[i].department,"selected":true};
+                            }else {
+                                department[i] = {"value":data.data[i].wash_count,"name":data.data[i].department};
+                            }                           
+                            // det_legend[i] = data.data[i].department + parseInt(data.data[i].wash_count/wash_num*100) + "%";
+                        };
+                        department_option.series[0]["data"] = department;
+                        // department_option.legend["data"] = det_legend;
+                        departmentEchart.setOption(department_option);
+                    },
+                    error:function(msg){
+                        alert("数据请求失败");
+                    },
+                });
+            };
+            /*具体科室本周手卫生执行情况*/
+            function ajax_week_det_wash_num_average(values = 1){
+                department_id = values;
+                $.ajax({
+                    datatype:'json',
+                    url:"?c=monitoring&a=week_per_wash_count&department_id=" + department_id,
+                    type:'GET',
+                    success:function(data){
+                        // console.log(data);
+                        $('#right_top_r_ping').text(data.data);
+
+                    },
+                    error:function(msg){
+                        alert("数据请求失败");
+                    },
+                });
+            };
+            /*具体科室本月人均洗手次数*/
+            function ajax_week_hospital_wash_line(values = 1){
+                department_id = values;
+                $.ajax({
+                    datatype:'json',
+                    url:"?c=monitoring&a=month_per_wash_count&department_id=" + department_id,
+                    type:'GET',
+                    success:function(data){
+                        var data_data = data,xAxis = new Array(),series = new Array();
+                        // console.log(data);
+                        for (var i = 0; i < data_data.data.length; i++) {
+                            xAxis[data_data.data.length-i-1] = data_data.data[i].wash_date;
+                            series[data_data.data.length-i-1] = data_data.data[i].wash_count;
+                        };
+                        weekwash_option.xAxis[0]['data'] = xAxis;
+                        weekwash_option.series[0]['data'] = series;
+                        weekwashEchart.setOption(weekwash_option);
+                    },
+                    error:function(msg){
+                        alert("数据请求失败");
+                    },
+                });
+            };
+
+            //具体科室图片
+            function ajax_jpg(values = 1){
+                department_id = values;
+                $.ajax({
+                    url:"?c=monitoring&a=get_jpg&department_id=" + department_id,
+                    type:"GET",
+                    dataType:"json",
+                    success:function(data){
+                        $('#ajaxGet').attr('src',data.data);
+                        // console.info(data.data);
+                    },
+                    error:function(){
+                        alert("数据请求失败");
+                    }
+                });
+            }
+
+            function do_ajax(){
+                get_now_time();
+                ajax_today_det_wash_num_average();
+                ajax_week_det_wash_pie();
+                ajax_week_det_wash_num_average();
+                ajax_week_hospital_wash_line();
+                ajax_jpg();
+            }
+            $(function(){
+                if (parent.full_hide !== undefined) {
+                    if (parent.full_hide) {
+                        $('#resize_small').hide();
+                    };
+                };
+                $("button[value='1']").addClass('det_click');
+                do_ajax();
+                // ajax_get_det();
+                $('.department_sel').click(function(){
+                    var values = $(this).val();
+                    $(this).addClass('det_click').siblings().removeClass('det_click');
+                    ajax_today_det_wash_num_average(values);
+                    ajax_week_det_wash_pie(values);
+                    ajax_week_det_wash_num_average(values);
+                    ajax_week_hospital_wash_line(values);
+                    ajax_jpg(values);
+                });
+            });
+            // $('.department_sel').on('click',function(){
+            //     department_id = $(this).val();
+            //     $(this).addClass('det_click').siblings().removeClass('det_click');
+            //     do_ajax();
+            // });
+            // var winheight = $(window).height();
+            // $('body').css('height',winheight);
+            // $('#rvscan_top').css('height',winheight/100*15);
+            // $('#rvscan_center').css('height',winheight/100*85);
+        </script>
+    </body>
+</html>

@@ -1,0 +1,197 @@
+<aside class="bg-black aside-md hidden-print" id="nav">          
+  <section class="vbox">
+    <section class="scrollable">
+        <!-- nav -->                 
+        <nav class="nav-primary hidden-xs">
+          <div class="line dk hidden-nav-xs"></div>
+          <ul class="nav nav-main" data-ride="collapse">
+            <li id="monitoring_nav">
+              <a href="?c=monitoring&a=index" class="auto">
+                <span class="pull-right text-muted">
+                  <i class="i i-circle-sm-o text"></i>
+                  <i class="i i-circle-sm text-active"></i>
+                </span>
+                <i class="i i-stack icon">
+                </i>
+                <span class="font-bold">实时监控</span>
+              </a>
+            </li>
+            <li id="overview_nav">
+              <a href="?c=department&a=overview_show" class="auto">
+                <span class="pull-right text-muted">
+                  <i class="i i-circle-sm-o text"></i>
+                  <i class="i i-circle-sm text-active"></i>
+                </span>
+                <i class="i i-stack icon">
+                </i>
+                <span class="font-bold">总览</span>
+              </a>
+            </li>
+          </ul>
+          <div class="line dk hidden-nav-xs"></div>
+          <ul class="nav nav-main" data-ride="collapse">
+            <li id="department_nav">
+              <a href="?c=department&a=depaertment_statistics" class="auto">
+                <span class="pull-right text-muted">
+                  <i class="i i-circle-sm-o text"></i>
+                  <i class="i i-circle-sm text-active"></i>
+                </span>
+                <i class="i i-lab icon">
+                </i>
+                <span class="font-bold">科室手卫生统计</span>
+              </a>
+            </li>
+            <li id="duty_nav">
+              <a href="?c=duty&a=duty_interface" class="auto">
+                <span class="pull-right text-muted">
+                  <i class="i i-circle-sm-o text"></i>
+                  <i class="i i-circle-sm text-active"></i>
+                </span>
+                <i class="i i-docs icon">
+                </i>
+                <span class="font-bold">职务手卫生统计</span>
+              </a>
+            </li>
+            <li id="user_nav">
+              <a href="?c=user&a=user_index" class="auto">
+                <span class="pull-right text-muted">
+                  <i class="i i-circle-sm-o text"></i>
+                  <i class="i i-circle-sm text-active"></i>
+                </span>
+                <i class="i i-grid2 icon">
+                </i>
+                <span class="font-bold">人员手卫生统计</span>
+              </a>
+            </li>
+          </ul>
+          <div class="line dk hidden-nav-xs"></div>
+          <ul class="nav nav-main" data-ride="collapse" id="nav_top">
+            <li >
+              <a href="?c=washopportunity&a=opportunity_interface" class="auto">
+                <span class="pull-right text-muted">
+                  <i class="i i-circle-sm-o text"></i>
+                  <i class="i i-circle-sm text-active"></i>
+                </span>
+                <i class="i i-lab icon">
+                </i>
+                <span class="font-bold">洗手时机设置</span>
+              </a>
+            </li>
+            <li >
+              <a href="?c=card&a=cardbinding_interface" class="auto">
+                <span class="pull-right text-muted">
+                  <i class="i i-circle-sm-o text"></i>
+                  <i class="i i-circle-sm text-active"></i>
+                </span>
+                <i class="i i-docs icon">
+                </i>
+                <span class="font-bold">胸卡录入</span>
+              </a>
+            </li>
+          </ul>
+          <div class="line dk hidden-nav-xs" id="nav_top_div"></div>
+          <ul class="nav nav-main" data-ride="collapse" id="nav_middle">
+            <li>
+              <a href="?c=card&a=card_admin_interface" class="auto">
+                <span class="pull-right text-muted">
+                  <i class="i i-circle-sm-o text"></i>
+                  <i class="i i-circle-sm text-active"></i>
+                </span>
+                <i class="i i-lab icon">
+                </i>
+                <span class="font-bold">胸卡管理</span>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void;" class="auto">
+                <span class="pull-right text-muted">
+                  <i class="i i-circle-sm-o text"></i>
+                  <i class="i i-circle-sm text-active"></i>
+                </span>
+                <i class="i i-docs icon">
+                </i>
+                <span class="font-bold">出液器管理</span>
+              </a>
+              <ul class="nav dk" style="display: none;">
+                <li>
+                  <a href="?c=dispatch&a=dispatch_interface" class="auto">                                                        
+                    <i class="i i-dot"></i>
+                    <span>出液器列表</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="?c=dispatch&a=createdispatch_interface" class="auto">                                                                 
+                    <i class="i i-dot"></i>
+                    <span>出液器录入</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="javascript:void;" class="auto">
+                <span class="pull-right text-muted">
+                  <i class="i i-circle-sm-o text"></i>
+                  <i class="i i-circle-sm text-active"></i>
+                </span>
+                <i class="i i-docs icon">
+                </i>
+                <span class="font-bold">基站管理</span>
+              </a>
+              <ul class="nav dk" style="display: none;">
+                <li>
+                  <a href="?c=basestation&a=basestation_interface" class="auto">                                                        
+                    <i class="i i-dot"></i>
+                    <span>基站列表</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="?c=basestation&a=createbasestation_interface" class="auto">                                                                 
+                    <i class="i i-dot"></i>
+                    <span>基站录入</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <div class="line dk hidden-nav-xs" id="nav_middle_div"></div>
+          <ul class="nav nav-main" data-ride="collapse" id="nav_bottom">
+            <li>
+              <a href="?c=user&a=user_manage_interface" class="auto">
+                <span class="pull-right text-muted">
+                  <i class="i i-circle-sm-o text"></i>
+                  <i class="i i-circle-sm text-active"></i>
+                </span>
+                <i class="i i-lab icon">
+                </i>
+                <span class="font-bold">人员管理</span>
+              </a>
+            </li>
+            <li>
+              <a href="?c=duty&a=department_manage_interface" class="auto">
+                <span class="pull-right text-muted">
+                  <i class="i i-circle-sm-o text"></i>
+                  <i class="i i-circle-sm text-active"></i>
+                </span>
+                <i class="i i-docs icon">
+                </i>
+                <span class="font-bold">科室管理</span>
+              </a>
+            </li>
+            <li>
+              <a href="?c=duty&a=duty_manage_interface" class="auto">
+                <span class="pull-right text-muted">
+                  <i class="i i-circle-sm-o text"></i>
+                  <i class="i i-circle-sm text-active"></i>
+                </span>
+                <i class="i i-docs icon">
+                </i>
+                <span class="font-bold">职务管理</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <!-- / nav -->
+    </section>
+    
+  </section>
+  </aside>

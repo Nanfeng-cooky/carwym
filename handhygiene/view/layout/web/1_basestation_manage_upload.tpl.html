@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" class="app">
+<head>   
+  <meta charset="utf-8">
+  <title>基站管理/基站录入</title>
+  <meta name="description" content="app, web app, responsive, admin dashboard, admin, flat, flat ui, ui kit, off screen nav">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> 
+  <link rel="stylesheet" href="static/css/bootstrap.css" type="text/css">
+  <link rel="stylesheet" href="static/css/animate.css" type="text/css">
+  <link rel="stylesheet" href="static/css/font-awesome.min.css" type="text/css">
+  <link rel="stylesheet" href="static/css/icon.css" type="text/css">
+  <link rel="stylesheet" href="static/css/font.css" type="text/css">
+  <link rel="stylesheet" href="static/css/app.css" type="text/css">  
+  <link rel="stylesheet" href="static/js/datatables/datatables.css" type="text/css"> 
+  <link rel="stylesheet" href="static/css/wash_style.css" type="text/css"> 
+    <!--[if lt IE 9]>
+    <script src="js/ie/html5shiv.js"></script>
+    <script src="js/ie/respond.min.js"></script>
+    <script src="js/ie/excanvas.js"></script>
+  <![endif]-->
+</head>
+<body class="">
+  <section class="vbox">
+    <?php @include_once( dirname(__FILE__) ) . DS . 'header.tpl.html'; ?>
+    <section>
+      <section class="hbox stretch">
+        <!-- .aside -->
+        <?php @include_once( dirname(__FILE__) ) . DS . 'left_nav.tpl.html'; ?>
+        <!-- /.aside -->
+        <section id="content">
+          <section class="vbox">
+            <section class="scrollable padder">
+              <div class="m-b-md">
+                <h3 class="m-b-none">基站管理/基站入库</h3>
+              </div>
+              <section class="panel panel-default">
+                <header class="panel-heading">基站入库</header>
+                <form role="form" action="?c=basestation&a=createbasestation" method="post" class="form-horizontal" enctype="multipart/form-data" novalidate="">
+                        
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label required" for="swind_chest_basestation_basestation_number">请上传.xls的文件</label>
+                    <div class="col-sm-10">
+                      <input type="file" id="swind_chest_basestation_basestation_number" name="basestation" required="required" placeholder="请选择CSV文件上传...">
+                    </div>
+                  </div>
+                  <div class="form-group-separator"></div>
+                  <!-- <input type="hidden" id="swind_chest_card__token" name="swind_chest_card[_token]" value="DQPv0Hojk89ppfX_pvjgNlff-xkI39HMoW744KAns0o"> -->
+                                          
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label"></label>
+                    <div class="col-sm-10">
+                        <button type="submit" class="btn btn-primary">更新</button>
+                        <a href=" " class="btn btn-danger">取消</a>
+                    </div>
+                  </div>
+
+                </form>
+              </section>
+            </section>
+          </section>
+        </section>
+      </section>
+    </section>
+  </section>
+  <script src="static/js/jquery.min.js"></script>
+  <!-- bootstrap -->
+  <script src="static/js/bootstrap.js"></script>
+  <!-- app -->
+  <script src="static/js/app.js"></script>
+  <script src="static/js/slimscroll/jquery.slimscroll.min.js"></script>
+  <!-- datatables-->
+  <script src="static/js/datatables/jquery.dataTables.min.js"></script>
+  <script src="static/js/datatables/jquery.csv-0.71.min.js"></script>
+  <script src="static/js/app.plugin.js"></script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" class="app max_767_h">
+<head>   
+  <meta charset="utf-8">
+  <title>实时监控</title>
+  <meta name="description" content="app, web app, responsive, admin dashboard, admin, flat, flat ui, ui kit, off screen nav">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> 
+  <link rel="stylesheet" href="static/css/bootstrap.css" type="text/css">
+  <link rel="stylesheet" href="static/css/animate.css" type="text/css">
+  <link rel="stylesheet" href="static/css/font-awesome.min.css" type="text/css">
+  <link rel="stylesheet" href="static/css/icon.css" type="text/css">
+  <link rel="stylesheet" href="static/css/font.css" type="text/css">
+  <link rel="stylesheet" href="static/css/app.css" type="text/css">  
+  <link rel="stylesheet" href="static/js/datatables/datatables.css" type="text/css"> 
+  <link rel="stylesheet" href="static/css/wash_style.css" type="text/css"> 
+  <style type="text/css">
+    @media (max-width: 767px){
+      html, body,.max_767_h{
+        height: 100%;overflow: hidden;
+      }
+    }
+  </style>
+  
+
+    <!--[if lt IE 9]>
+    <script src="js/ie/html5shiv.js"></script>
+    <script src="js/ie/respond.min.js"></script>
+    <script src="js/ie/excanvas.js"></script>
+  <![endif]-->
+</head>
+<body class="max_767_h">
+  <div id="full"><a href="?c=monitoring&a=index_full"><i class="fa fa-arrows-alt"></i></a></div>
+  <section class="vbox max_767_h">
+    <?php include_once('header.tpl.html'); ?>
+    <section class="max_767_h">
+      <section class="hbox stretch max_767_h">
+        <!-- .aside -->
+        <?php include_once('left_nav.tpl.html'); ?>
+        <!-- /.aside -->
+        <section id="content" class="max_767_h">
+          <object data="?c=monitoring&a=index_full" width="100%" height="100%" style="border:solid #fff 0"></object>
+          <!-- <object type="text/html" data="1_real_time_monitoring_full.html" width="100%" height="100%"></object> -->
+        </section>
+      </section>
+    </section>
+  </section>
+  <script src="static/js/jquery.min.js"></script>
+  <!-- bootstrap -->
+  <script src="static/js/bootstrap.js"></script>
+  <!-- app -->
+  <script src="static/js/app.js"></script>
+  <script src="static/js/slimscroll/jquery.slimscroll.min.js"></script>
+  <!-- datatables-->
+  <script src="static/js/datatables/jquery.dataTables.min.js"></script>
+  <script src="static/js/datatables/jquery.csv-0.71.min.js"></script>
+  <script src="static/js/app.plugin.js"></script>
+  <script>       
+      (function (doc, win) {   
+          var docEl = doc.documentElement,   
+          resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',   
+          recalc = function () {   
+          var clientWidth = docEl.clientWidth;   
+          if (!clientWidth) return;   
+          docEl.style.fontSize = 20 * (clientWidth / 320) + 'px';   
+      };   
+      if (!doc.addEventListener) return;   
+      win.addEventListener(resizeEvt, recalc, false);   
+      doc.addEventListener('DOMContentLoaded', recalc, false);   
+      })(document, window);   
+  </script>
+  <script type="text/javascript">
+    var details_center_width;
+    var full_hide = true;
+    $(function(){
+      details_center_width = parseInt($('#deparment_details_center').width()/300) * 300;
+      // console.log($('#deparment_details_center').width());
+      // console.log(details_center_width);
+      $('#deparment_details_box').css('width',details_center_width);
+      $("iframe").contents().find("#resize_small").css('display','none');
+      // document.getElementById("content").innerHTML = '<object type="text/html" data="1_real_time_monitoring_full.html" width="100%" height="100%"></object>';
+      // $('#content').load('1_real_time_monitoring_full.html');
+    });
+    // 设置监听窗口变化时间
+    $(window).resize(function (){
+        details_center_width = parseInt($('#deparment_details_center').width()/300) * 300;
+        // console.log($('#deparment_details_center').width());
+        // console.log(details_center_width);
+        $('#deparment_details_box').css('width',details_center_width);
+    });
+  </script>
+  <script type="text/javascript">
+    $(function(){
+        $.ajax({
+            url : "?c=monitoring&a=get_session",
+            type: "post",
+            dataType: "json",
+            success: function(mes){
+                if(mes == 2){//表明身份是护士长
+                   $("#nav_top").hide();
+                   $("#nav_top_div").hide();
+                   $("#nav_middle").hide();
+                   $("#nav_middle_div").hide();
+                   $("#nav_bottom").hide();
+                }
+            },
+            error: function(){
+                alert("ajax发送失败");
+            }
+        });
+    });
+  </script>
+</body>
+</html>
